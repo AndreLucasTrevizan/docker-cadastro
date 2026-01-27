@@ -1,17 +1,12 @@
-FROM node:24.13.0
+FROM node:20-alpine
 
-COPY src /api/src
-COPY .env          /api
-COPY biome.json    /api
-COPY package.json  /api
-COPY tsconfig.json /api
+WORKDIR /app
 
-WORKDIR /api
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm
+RUN pnpm install
 
-RUN ["npm", "install", "-g", "pnpm@latest-10"]
-RUN ["npm", "install", "-g", "typescript"]
-RUN ["pnpm", "i"]
+COPY . .
 
 EXPOSE 3333
-
 CMD ["pnpm", "run", "dev"]

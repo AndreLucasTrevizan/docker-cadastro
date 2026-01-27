@@ -1,8 +1,12 @@
 services:
   cadastro-api:
     build: ./api
+    environment:
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
     ports:
       - "3333:3333"
+    depends_on:
+      - cadastro-database
     networks:
       - cadastro-networks
 
@@ -10,6 +14,18 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
+    networks:
+      - cadastro-networks
+  cadastro-database:
+    image: bitnami/postgresql
+    environment:
+      POSTGRESQL_USERNAME: ${DB_USER}
+      POSTGRESQL_PASSWORD: ${DB_PASS}
+      POSTGRESQL_DATABASE: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/bitnami/postgresql
     networks:
       - cadastro-networks
   gateway:
@@ -22,6 +38,10 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     networks:
       - cadastro-networks
+
+volumes:
+  postgres_data:
+
 
 networks:
   cadastro-networks:

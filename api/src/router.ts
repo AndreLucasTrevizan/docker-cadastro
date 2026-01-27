@@ -1,6 +1,8 @@
 import { FastifyInstance } from 'fastify'
-import { AuthRoutes } from './routes/AuthRoutes'
+import { MeRoutes } from './routes/MeRoutes'
+//import { AuthRoutes } from './routes/AuthRoutes'
 
 export async function router(fastify: FastifyInstance) {
-  fastify.register(AuthRoutes)
+  //fastify.register(AuthRoutes)
+  fastify.register(MeRoutes)
 }

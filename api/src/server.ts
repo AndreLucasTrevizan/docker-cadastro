@@ -26,8 +26,9 @@ const start = async () => {
   await app.register(fastifySwagger, {
     openapi: {
       info: {
-        title: 'API de Teste no Docker',
-        description: 'Essa API é uma API de teste criada por Andre Lucas Trevizan',
+        title: 'Delta Code Crafter API',
+        description: `API principal da Delta Code Crafter<br />
+        <small>Criada por Andre Lucas Trevizan - Full Stack Dev</small>`,
         version: '1.0.0',
       },
     },
