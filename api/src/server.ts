@@ -1,16 +1,16 @@
-import { fastify } from 'fastify'
+import Fastify from 'fastify'
 import {
   serializerCompiler,
   validatorCompiler,
   jsonSchemaTransform,
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
-import { fastifySwagger } from '@fastify/swagger'
-import { fastifyCors } from '@fastify/cors'
+import fastifySwagger from '@fastify/swagger'
+import fastifyCors from '@fastify/cors'
 import ScalarApiReference from '@scalar/fastify-api-reference'
 import { router } from './router'
 
-const app = fastify({
+const app = Fastify({
   logger: true,
 }).withTypeProvider<ZodTypeProvider>()
 
