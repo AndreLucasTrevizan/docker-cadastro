@@ -1,4 +1,4 @@
-import { prisma } from '@/prisma';
+import { prisma } from '../prisma';
 import { FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } from 'fastify'
 import { email, z } from 'zod'
 

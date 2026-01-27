@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.healthResponseSchema = void 0;
 exports.MeRoutes = MeRoutes;
-const prisma_1 = require("@/prisma");
+const prisma_1 = require("../prisma");
 const zod_1 = require("zod");
 exports.healthResponseSchema = zod_1.z.object({
     status: zod_1.z.literal("ok"),
