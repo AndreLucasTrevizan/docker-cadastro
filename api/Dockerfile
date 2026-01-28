@@ -1,25 +1,31 @@
-FROM node:20-alpine AS BUILD
+# ---------- BASE ----------
+FROM node:24.13.0 AS base
 
 WORKDIR /api
 
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
 RUN npm install -g pnpm
-
 RUN pnpm install
 
 COPY . .
 
-CMD ["pnpm", "run", "build"]
+# ---------- BUILD ----------
+FROM base AS build
+RUN pnpm run build
 
-FROM node:20-alpine AS RUNNER
+# ---------- DEV ----------
+FROM base AS dev
+CMD ["pnpm", "run", "dev"]
+
+# ---------- PROD ----------
+FROM node:24.13.0 AS prod
 
 WORKDIR /api
 
-COPY --from=BUILD /api/node_modules ./node_modules
-COPY --from=BUILD /api/dist ./dist
-COPY --from=BUILD /api/package*.json ./
+COPY --from=build /api/node_modules ./node_modules
+COPY --from=build /api/dist ./dist
+COPY --from=build /api/package.json ./
 
 EXPOSE 3333
-
 CMD ["node", "dist/server.js"]
